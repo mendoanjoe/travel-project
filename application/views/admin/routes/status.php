@@ -37,7 +37,6 @@ if($segs != "view"){
                                         </div>
                                         <input type="submit" name="submit" class="btn btn-primary float-right">
                                         <?php echo form_close(); ?>   
-                                    </form>
                                 </div>
                             </div>
                         </div>

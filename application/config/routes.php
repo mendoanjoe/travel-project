@@ -7,6 +7,10 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
 
+$route['admin/login'] = "admin/login_view";
+$route['admin/login/act'] = "admin/login_ex";
+$route['admin/logout'] = "admin/admin_logout";
+
 $route['search'] = 'home/search';
 $route['prebooking'] = 'home/prebooking';
 $route['booking'] = 'home/booking';

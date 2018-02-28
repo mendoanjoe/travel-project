@@ -13,16 +13,41 @@ class Admin extends CI_Controller {
 	}
 
 	public function home(){
-		$data['total_revenue'] = $this->Admin_Model->total_revenue();
-		$data['total_order'] = $this->Admin_Model->total_order();
-		$data['total_flight'] = $this->Admin_Model->total_flight();
-		$data['total_route'] = $this->Admin_Model->total_route();
-		$data['order_request'] = $this->Admin_Model->order_request();
-		
-		$this->load->view('templates/header');
-		$this->load->view('templates/sidebar');
-		$this->load->view('admin/home', $data);
-		$this->load->view('templates/footer');
+		if($this->session->userdata('user_admin') != FALSE){
+			$data['total_revenue'] = $this->Admin_Model->total_revenue();
+			$data['total_order'] = $this->Admin_Model->total_order();
+			$data['total_flight'] = $this->Admin_Model->total_flight();
+			$data['total_route'] = $this->Admin_Model->total_route();
+			$data['order_request'] = $this->Admin_Model->order_request();
+			
+			$this->load->view('templates/header');
+			$this->load->view('templates/sidebar');
+			$this->load->view('admin/home', $data);
+			$this->load->view('templates/footer');
+		}else{
+			redirect('admin/login','refresh');
+		}
+	}
+
+	public function login_view(){
+		$this->load->view('admin/login');
+	}
+
+	public function login_ex(){
+		$data=array();
+		if ($this->input->post('submit')) {
+			$data = $this->Admin_Model->admin_login();
+			if($data != FALSE){
+				redirect('admin/home','refresh');
+			}else{
+				redirect('admin/login','refresh');
+			}			
+		}
+	}
+
+	public function admin_logout(){
+		$this->session->unset_userdata('user_admin');
+		redirect('admin/login','refresh');
 	}
 
 	public function order_approve($id){

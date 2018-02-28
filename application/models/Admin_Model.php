@@ -21,6 +21,22 @@ class Admin_Model extends CI_Model {
         }
         return number_format($query);
     }
+
+    public function admin_login(){
+        $this->db->reset_query();
+        $email = $this->input->post('email');
+        $password = base64_encode($this->input->post('password'));
+        $query = $this->db->get_where('admin', array('email' => $email,'password' => $password));
+        $valid = FALSE;
+        if($query->num_rows() > 0){
+            $this->session->set_userdata('user_admin', 'Ter Login');
+            $valid = TRUE;
+        }else{
+            $valid = FALSE;
+        }
+
+        return $valid;
+    }
     
     public function total_order(){
         $this->db->reset_query();
